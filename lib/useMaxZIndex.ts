@@ -1,6 +1,15 @@
 import { useMemo } from "react";
 
-import { useThreads } from "@/liveblocks.config";
+// Mock implementation of useThreads
+const useThreads = () => {
+  // Replace this with your actual thread data
+  const threads = [
+    { metadata: { zIndex: 1 } },
+    { metadata: { zIndex: 3 } },
+    { metadata: { zIndex: 2 } },
+  ];
+  return { threads };
+};
 
 // Returns the highest z-index of all threads
 export const useMaxZIndex = () => {
