@@ -1,14 +1,16 @@
-import { useSelf } from "@liveblocks/react";
-import { useOthers } from "@liveblocks/react";
+// import { useSelf } from "@liveblocks/react";
+// import { useOthers } from "@liveblocks/react";
 import { Avatar } from "./Avatar";
 import styles from "./index.module.css";
 import { generateRandomName } from "@/lib/utils";
 import { useMemo } from "react";
 
-const ActiveUsers = () => {
-    const users = useOthers();
-    const currentUser = useSelf();
-    const hasMoreUsers = users.length > 3;
+const ActiveUsers = ({ users = [], currentUser = null }) => {
+    const hasMoreUsers = users.length > 3
+
+    // const users = useOthers();
+    // const currentUser = useSelf();
+    // const hasMoreUsers = users.length > 3;
   
     const memorizedUsers = useMemo(() => {
       return (
