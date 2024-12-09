@@ -1,5 +1,8 @@
 "use client";
 
+import Loader from "@/components/Loader";
+import { RoomProvider } from "@/liveblocks.config";
+import { LiveMap } from "@liveblocks/client";
 import { ReactNode, useState, useEffect } from "react";
 
 export function Room({ children }: { children: ReactNode }) {
@@ -12,12 +15,24 @@ export function Room({ children }: { children: ReactNode }) {
   }, []);
 
   if (loading) {
-    return <div>Loading…</div>;
+    return <Loader />;
   }
 
   return (
-    <>
-      {children}
-    </>
+    <div>
+      <RoomProvider 
+        id="my-room"
+        initialPresence={{
+          cursor: null, 
+          cursorColor: null, 
+          editingText: null
+        }}
+        initialStorage={{
+          canvasObjects: new LiveMap()
+        }}
+      >
+        {children}
+      </RoomProvider>
+    </div>
   );
 }

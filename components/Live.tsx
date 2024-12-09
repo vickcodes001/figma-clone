@@ -47,8 +47,13 @@ const Live = ({ canvasRef }: Props) => {
 
     // Function to handle incoming events (you would need to implement this)
     const handleEvent = (eventData: any) => {
-        // Update reactions based on event data
-        setReactions((prev) => [...prev, eventData]);
+        if (eventData.type === 'reaction') {
+            setReactions((prev) => [...prev, {
+                point: eventData.point,
+                value: eventData.value,
+                timestamp: Date.now()
+            }]);
+        }
     };
 
     // Example of using useEffect to listen for events
@@ -60,9 +65,9 @@ const Live = ({ canvasRef }: Props) => {
         };
     }, []);
 
-    useInterval(() => {
-        setReactions((reaction) => reaction.filter((r) => r.timestamp > Date.now() - 4000));
-    }, 1000);
+    // useInterval(() => {
+    //     setReactions((reaction) => reaction.filter((r) => r.timestamp > Date.now() - 4000));
+    // }, 1000);
 
     useInterval(() => {
         if (presence.cursor && presence.cursor.mode === CursorMode.Reaction && presence.cursor.isPressed) {
@@ -163,6 +168,7 @@ const Live = ({ canvasRef }: Props) => {
                     value={r.value}
                 />
             ))}
+
             {presence.cursor && (
                 <CursorChat
                     cursor={presence.cursor ? { x: presence.cursor.x ?? 0, y: presence.cursor.y ?? 0 } : { x: 0, y: 0 }}

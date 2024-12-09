@@ -174,7 +174,7 @@ export type CanvasObjectScaling = {
 
 export type RenderCanvas = {
   fabricRef: React.MutableRefObject<fabric.Canvas | null>;
-  canvasObjects: any;
+  canvasObjects: any[];
   activeObjectRef: any;
 };
 
