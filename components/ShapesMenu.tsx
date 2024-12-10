@@ -14,7 +14,7 @@ const ShapesMenu = ({
   handleImageUpload,
   imageInputRef,
 }: ShapesMenuProps) => {
-  const isDropdownElem = item.value.some((elem) => elem?.value === (activeElement?.value));
+  const isDropdownElem = item.value.some((elem) => elem?.value === activeElement.value);
 
   return (
     <>
@@ -38,7 +38,7 @@ const ShapesMenu = ({
                 handleActiveElement(elem);
               }}
               className={`flex h-fit justify-between gap-10 rounded-none px-5 py-3 focus:border-none ${
-                activeElement?.value === elem?.value ? "bg-primary-green" : "hover:bg-primary-grey-200"
+                activeElement.value === elem?.value ? "bg-primary-green" : "hover:bg-primary-grey-200"
               }`}
             >
               <div className="group flex items-center gap-2">
@@ -47,11 +47,11 @@ const ShapesMenu = ({
                   alt={elem?.name as string}
                   width={20}
                   height={20}
-                  className={activeElement?.value === elem?.value ? "invert" : ""}
+                  className={activeElement.value === elem?.value ? "invert" : ""}
                 />
                 <p
                   className={`text-sm  ${
-                    activeElement?.value === elem?.value ? "text-primary-black" : "text-white"
+                    activeElement.value === elem?.value ? "text-primary-black" : "text-white"
                   }`}
                 >
                   {elem?.name}

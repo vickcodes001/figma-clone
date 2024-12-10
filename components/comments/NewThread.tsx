@@ -12,6 +12,7 @@ import { Slot } from "@radix-ui/react-slot";
 import * as Portal from "@radix-ui/react-portal";
 import { ComposerSubmitComment } from "@liveblocks/react-comments/primitives";
 
+import { useCreateThread } from "@/liveblocks.config";
 import { useMaxZIndex } from "@/lib/useMaxZIndex";
 
 import PinnedComposer from "./PinnedComposer";
@@ -28,6 +29,13 @@ export const NewThread = ({ children }: Props) => {
   const [creatingCommentState, setCreatingCommentState] = useState<
     "placing" | "placed" | "complete"
   >("complete");
+
+  /**
+   * We're using the useCreateThread hook to create a new thread.
+   *
+   * useCreateThread: https://liveblocks.io/docs/api-reference/liveblocks-react#useCreateThread
+   */
+  const createThread = useCreateThread();
 
   // get the max z-index of a thread
   const maxZIndex = useMaxZIndex();
@@ -148,13 +156,6 @@ export const NewThread = ({ children }: Props) => {
     };
   }, [creatingCommentState]);
 
-  // Add a custom function to create a thread
-  const createThread = (data: { body: string; metadata: { x: number; y: number; resolved: boolean; zIndex: number; } }) => {
-    // Implement your custom thread creation logic here
-    console.log("Creating thread with data:", data);
-    // For example, you might send a request to your backend API
-  };
-
   // On composer submit, create thread and reset state
   const handleComposerSubmit = useCallback(
     ({ body }: ComposerSubmitComment, event: FormEvent<HTMLFormElement>) => {
@@ -189,7 +190,7 @@ export const NewThread = ({ children }: Props) => {
       setCreatingCommentState("complete");
       setAllowUseComposer(false);
     },
-    [composerCoords, maxZIndex]
+    [createThread, composerCoords, maxZIndex]
   );
 
   return (

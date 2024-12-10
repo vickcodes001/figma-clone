@@ -1,4 +1,4 @@
-import { fabric, Canvas } from "fabric";
+import { fabric } from "fabric";
 import { v4 as uuid4 } from "uuid";
 
 import {
@@ -103,7 +103,7 @@ export const handleCanvasMouseDown = ({
 };
 
 // handle mouse move event on canvas to draw shapes with different dimensions
-export const handleCanvasMouseMove = ({
+export const handleCanvaseMouseMove = ({
   options,
   canvas,
   isDrawing,
@@ -343,11 +343,8 @@ export const renderCanvas = ({
   // clear canvas
   fabricRef.current?.clear();
 
-  // Ensure canvasObjects is an array before processing
-  const canvasObjectsArray = Array.isArray(canvasObjects) ? canvasObjects : Object.entries(canvasObjects);
-
   // render all objects on canvas
-  Array.from(canvasObjectsArray, ([objectId, objectData]) => {
+  Array.from(canvasObjects, ([objectId, objectData]) => {
     /**
      * enlivenObjects() is used to render objects on canvas.
      * It takes two arguments:
@@ -361,12 +358,22 @@ export const renderCanvas = ({
       [objectData],
       (enlivenedObjects: fabric.Object[]) => {
         enlivenedObjects.forEach((enlivenedObj) => {
+          // if element is active, keep it in active state so that it can be edited further
           if (activeObjectRef.current?.objectId === objectId) {
             fabricRef.current?.setActiveObject(enlivenedObj);
           }
+
+          // add object to canvas
           fabricRef.current?.add(enlivenedObj);
         });
       },
+      /**
+       * specify namespace of the object for fabric to render it on canvas
+       * A namespace is a string that is used to identify the type of
+       * object.
+       *
+       * Fabric Namespace: http://fabricjs.com/docs/fabric.html
+       */
       "fabric"
     );
   });

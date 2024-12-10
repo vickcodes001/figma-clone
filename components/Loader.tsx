@@ -5,8 +5,8 @@ const Loader = () => (
     <Image
       src='/assets/loader.gif'
       alt='loader'
-      width={50}
-      height={50}
+      width={100}
+      height={100}
       className='object-contain'
     />
     <p className='text-sm font-bold text-primary-grey-300'>Loading...</p>
